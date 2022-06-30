@@ -4,7 +4,7 @@ import { Pool } from 'pg';
 
 const client = new Pool({
     host: config.host,
-    database: config.env=='dev' ? config.db: config.db_user,
+    database: config.env=='dev' ? config.db: config.db_test,
     user: config.db_user,
     password: config.db_password,
 })

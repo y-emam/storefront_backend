@@ -30,20 +30,22 @@ export default class UserModel{
         }
     }
 
-    async create(u: userType): Promise<[userType, string] | string> {
+    async create(u: userType): Promise<userType | string> {
         const salt = parseInt(config.salt_round as string, 10);
 
         try {
             const conn = await client.connect();
-            const sql = 'INSERT INTO users(first_name, last_name, password) VALUES ($1, $2, $3)';
+            const insertSql = 'INSERT INTO users(first_name, last_name, password) VALUES ($1, $2, $3);';
+            const outputSql = 'SELECT * FROM users where first_name = ($1) and last_name = ($2) and password = ($3);';
 
             // hash the passowrd
             const hashPass = bcrypt.hashSync(`${u.password}${config.pepper}`, salt)
 
             // use jwt token
-            const result = await conn.query(sql, [u.first_name, u.last_name, hashPass]);
+            const insert = await conn.query(insertSql, [u.first_name, u.last_name, hashPass]);
+            const result = await conn.query(outputSql, [u.first_name, u.last_name, hashPass]);
 
-            return [result.rows[0], TOKEN];
+            return result.rows[0];
         } catch (error) {
             console.log(`Error while trying to create new user: ${error}`);
             return `Error while trying to create new user: ${error}`;

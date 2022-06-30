@@ -36,16 +36,16 @@ export default class ProductModel {
         }
     }
 
-    async create(p: productType): Promise<productType | string> {
+    // async create(p: productType): Promise<productType | string> {
 
-    }
+    // }
 
     async popular(): Promise<productType[] | string> {
         try {
             const conn = await client.connect();
             const sql = '';
 
-            const result = await conn.query(sql, [productName]);
+            const result = await conn.query(sql, []);
             conn.release();
 
             return result.rows;

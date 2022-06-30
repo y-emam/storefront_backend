@@ -9,11 +9,11 @@ const app = express();
 const port = config.port;
 
 
-app.use('/api', routes);
-
 app.use(helmet());
 
 app.use(express.json());
+
+app.use('/api', routes);
 
 
 app.listen(port, () => {
