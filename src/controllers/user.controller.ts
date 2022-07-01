@@ -8,7 +8,7 @@ import UserModel from '../models/user.model';
 const userObject = new UserModel();
 
 export const index = (req: Request, res: Response, next: NextFunction) => {
-    res.send('index');
+    
 }
 
 export const show = (req: Request, res: Response, next: NextFunction) => {

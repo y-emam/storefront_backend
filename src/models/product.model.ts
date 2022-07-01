@@ -36,9 +36,24 @@ export default class ProductModel {
         }
     }
 
-    // async create(p: productType): Promise<productType | string> {
+    async create(p: productType): Promise<productType | string> {
+        try {
+            const conn = await client.connect();
+            const sql = 'Insert into products(name, price, category) values ($1, $2, $3)';
 
-    // }
+            const result = await conn.query(sql ,[p.name, p.price, p.category]);
+            conn.release();
+
+            if (result) {
+                return result.rows[0];
+            } else {
+                return "Error: couldn't add product to database";
+            }
+        } catch (error) {
+            console.log(`Error while trying to create new product: ${error}`);
+            return `Error while trying to create new product: ${error}`;
+        }
+    }
 
     async popular(): Promise<productType[] | string> {
         try {
