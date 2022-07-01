@@ -1,7 +1,5 @@
 import client from '../database';
 import userType from '../types/user.type';
-import config from '../config';
-import bcrypt from 'bcrypt';
 
 export default class UserModel{
     async Index(): Promise<userType[] | string> {
@@ -31,7 +29,7 @@ export default class UserModel{
     }
 
     async create(u: userType): Promise<userType | string> {
-        const salt = parseInt(config.salt_round as string, 10);
+        
 
         try {
             const conn = await client.connect();
@@ -39,11 +37,11 @@ export default class UserModel{
             const outputSql = 'SELECT * FROM users where first_name = ($1) and last_name = ($2) and password = ($3);';
 
             // hash the passowrd
-            const hashPass = bcrypt.hashSync(`${u.password}${config.pepper}`, salt)
+            
 
             // use jwt token
-            const insert = await conn.query(insertSql, [u.first_name, u.last_name, hashPass]);
-            const result = await conn.query(outputSql, [u.first_name, u.last_name, hashPass]);
+            const insert = await conn.query(insertSql, [u.first_name, u.last_name, u.password]);
+            const result = await conn.query(outputSql, [u.first_name, u.last_name, u.password]);
 
             return result.rows[0];
         } catch (error) {

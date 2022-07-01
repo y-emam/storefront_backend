@@ -49,11 +49,13 @@ class UserModel {
             const salt = parseInt(config_1.default.salt_round, 10);
             try {
                 const conn = yield database_1.default.connect();
-                const sql = 'INSERT INTO users(first_name, last_name, password) VALUES ($1, $2, $3); SELECT * FROM users where id = SCOPE_IDENTITY();';
+                const insertSql = 'INSERT INTO users(first_name, last_name, password) VALUES ($1, $2, $3);';
+                const outputSql = 'SELECT * FROM users where first_name = ($1) and last_name = ($2) and password = ($3);';
                 // hash the passowrd
                 const hashPass = bcrypt_1.default.hashSync(`${u.password}${config_1.default.pepper}`, salt);
                 // use jwt token
-                const result = yield conn.query(sql, [u.first_name, u.last_name, hashPass]);
+                const insert = yield conn.query(insertSql, [u.first_name, u.last_name, hashPass]);
+                const result = yield conn.query(outputSql, [u.first_name, u.last_name, hashPass]);
                 return result.rows[0];
             }
             catch (error) {

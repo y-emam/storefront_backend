@@ -31,8 +31,19 @@ const create = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
             data.last_name !== '' && typeof data.last_name === 'string' &&
             data.password !== '' && typeof data.password === 'string') {
             const user = yield userObject.create(data);
-            const token = jsonwebtoken_1.default.sign({ user }, config_1.default.token);
-            res.send(token);
+            if (typeof user === 'string') {
+                res.json({
+                    status: 'error',
+                    message: `faield to create new user: ${user}`
+                });
+            }
+            else {
+                const token = jsonwebtoken_1.default.sign({ user }, config_1.default.token);
+                res.json({
+                    status: 'success',
+                    token: token
+                });
+            }
         }
         else {
             res.status(400);

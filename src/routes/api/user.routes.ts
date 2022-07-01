@@ -1,15 +1,16 @@
 import { Router } from 'express';
 import { index, show, create } from '../../controllers/user.controller'
+import { authenticate } from '../../middleware/authenticate';
 
 
 const userRoutes = Router();
 
-userRoutes.post('/', index);
+userRoutes.post('/', authenticate, index);
 
 
-userRoutes.post('/show', show);
+userRoutes.post('/show', authenticate, show);
 
 
-userRoutes.route('/create').post(create);
+userRoutes.post('/create', create);
 
 export default userRoutes;

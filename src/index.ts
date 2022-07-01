@@ -15,6 +15,10 @@ app.use(express.json());
 
 app.use('/api', routes);
 
+app.use((req, res) => {
+    res.status(404).send("Error: routes doesn't exist (-_-)");
+})
+
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
