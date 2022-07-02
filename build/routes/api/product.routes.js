@@ -7,6 +7,6 @@ const productRoutes = (0, express_1.Router)();
 productRoutes.get('/', product_controller_1.index);
 productRoutes.get('/show', product_controller_1.show);
 productRoutes.post('/create', authenticate_1.authenticate, product_controller_1.create);
-productRoutes.post('/top5', product_controller_1.top5);
+productRoutes.get('/top5', product_controller_1.top5);
 productRoutes.get('/category', product_controller_1.category);
 exports.default = productRoutes;

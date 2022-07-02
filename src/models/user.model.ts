@@ -8,7 +8,12 @@ export default class UserModel{
             const sql = 'select first_name, last_name from users;';
 
             const result = await conn.query(sql);
-            return result.rows;
+            
+            if (result.rows.length > 0) {
+                return result.rows;
+            } else {
+                throw new Error("No data in the database");
+            }
         } catch (error) {
             console.log(`Error while trying to get users: ${error}`);
             return `Error while trying to get users: ${error}`;
@@ -21,7 +26,12 @@ export default class UserModel{
             const sql = 'SELECT first_name, last_name from users WHERE first_name = $1 AND last_name = $2;';
 
             const result = await conn.query(sql, [first_name, last_name]);
-            return result.rows;
+            
+            if (result.rows.length > 0) {
+                return result.rows;
+            } else {
+                throw new Error("No data in the database");
+            }
         } catch (error) {
             console.log(`Erro while trying to get users from database: ${error}`);
             return `Erro while trying to get users from database: ${error}`;
@@ -40,7 +50,11 @@ export default class UserModel{
             const insert = await conn.query(insertSql, [u.first_name, u.last_name, u.password]);
             const result = await conn.query(outputSql, [u.first_name, u.last_name, u.password]);
 
-            return result.rows[0];
+            if (result.rows.length > 0) {
+                return result.rows[0];
+            } else {
+                throw new Error("No data in the database");
+            }
         } catch (error) {
             console.log(`Error while trying to create new user: ${error}`);
             return `Error while trying to create new user: ${error}`;

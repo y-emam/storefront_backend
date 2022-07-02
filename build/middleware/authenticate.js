@@ -17,19 +17,19 @@ const authenticate = (req, res, next) => {
                     next();
                 }
                 else {
-                    res.send(`Error: failed to authenticate user by token: unvalid token`);
+                    res.status(401).send(`Error: failed to authenticate user by token: unvalid token`);
                 }
             }
             catch (error) {
-                res.send(`Error: failed to authenticate user by token: ${error}`);
+                res.status(401).send(`Error: failed to authenticate user by token: ${error}`);
             }
         }
         else {
-            res.send(`Error: failed to authenticate user by token: no authentication token`);
+            res.status(401).send(`Error: failed to authenticate user by token: no authentication token`);
         }
     }
     catch (error) {
-        res.send(`Error: failed to authenticate user by token: ${error}`);
+        res.status(401).send(`Error: failed to authenticate user by token: ${error}`);
     }
 };
 exports.authenticate = authenticate;

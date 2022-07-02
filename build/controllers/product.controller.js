@@ -16,9 +16,54 @@ exports.category = exports.top5 = exports.create = exports.show = exports.index 
 const product_model_1 = __importDefault(require("../models/product.model"));
 const ProductObject = new product_model_1.default();
 const index = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const products = yield ProductObject.index();
+        if (typeof products === 'string') {
+            throw new Error(products);
+        }
+        else {
+            res.json({
+                status: 'success',
+                data: products
+            });
+        }
+    }
+    catch (error) {
+        console.log(`Error: while trying to get all products: ${error}`);
+        res.status(400).json({
+            status: 'error',
+            message: `Error: while trying to get all products: ${error}`
+        });
+    }
 });
 exports.index = index;
 const show = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const productName = req.query.name;
+        if (typeof productName === 'string') {
+            const products = yield ProductObject.show(productName.toLowerCase());
+            if (typeof products === 'string') {
+                throw new Error(products);
+            }
+            else {
+                res.json({
+                    status: 'success',
+                    data: products
+                });
+            }
+        }
+        else {
+            res.status(400);
+            throw new Error('enter the product name in the url');
+        }
+    }
+    catch (error) {
+        console.log(`Error: while trying to get products: ${error}`);
+        res.status(400).json({
+            status: 'error',
+            message: `Error: while trying to get products: ${error}`
+        });
+    }
 });
 exports.show = show;
 const create = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -27,17 +72,21 @@ const create = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
         // validation of data
         if (data.name === '' || typeof data.name !== 'string'
             || data.price <= 0 || typeof data.price !== 'number') {
-            res.json({
+            res.status(400).json({
                 status: 'error',
                 message: 'Invalid input data'
             });
             return;
         }
+        data.name = data.name.toLowerCase();
+        if (data.category) {
+            data.category = data.category.toLowerCase();
+        }
         // work with database
         const product = yield ProductObject.create(data);
         // check success or failer of working with database
         if (typeof product === 'string') {
-            res.json({
+            res.status(400).json({
                 status: 'error',
                 message: `Error while trying to create product: ${product}`
             });
@@ -50,7 +99,7 @@ const create = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
         }
     }
     catch (error) {
-        res.json({
+        res.status(400).json({
             status: 'error',
             message: error,
         });
@@ -58,8 +107,47 @@ const create = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
 });
 exports.create = create;
 const top5 = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const products = yield ProductObject.popular();
+        if (typeof products === 'string') {
+            throw new Error(products);
+        }
+        else {
+            res.json({
+                status: 'success',
+                data: products
+            });
+        }
+    }
+    catch (error) {
+        console.log(`Error: while trying to get top 5 products: ${error}`);
+        res.status(400).json({
+            status: 'error',
+            message: `Error: while trying to get top 5 products: ${error}`
+        });
+    }
 });
 exports.top5 = top5;
 const category = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const category = req.query.category;
+        const products = yield ProductObject.category(category);
+        if (typeof products === 'string') {
+            throw new Error(products);
+        }
+        else {
+            res.json({
+                status: 'success',
+                data: products
+            });
+        }
+    }
+    catch (error) {
+        console.log(`Error: while trying to get products by category: ${error}`);
+        res.status(400).json({
+            status: 'error',
+            message: `Error: while trying to get products by category: ${error}`
+        });
+    }
 });
 exports.category = category;

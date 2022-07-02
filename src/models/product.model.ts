@@ -12,7 +12,11 @@ export default class ProductModel {
 
             conn.release();
 
-            return result.rows;
+            if (result.rows.length > 0) {
+                return result.rows;
+            } else {
+                throw new Error("No data in the database");
+            }
         } catch (error) {
             console.log(`Error while trying to get products: ${error}`);
 
@@ -29,7 +33,11 @@ export default class ProductModel {
             const result = await conn.query(sql, [productName]);
             conn.release();
 
-            return result.rows;
+            if (result.rows.length > 0) {
+                return result.rows;
+            } else {
+                throw new Error("No data in the database");
+            }
         } catch (error) {
             console.log(`Error while trying to get it from the database: ${error}`);
             return `Error while trying to get it from the database: ${error}`;
@@ -44,10 +52,10 @@ export default class ProductModel {
             const result = await conn.query(sql ,[p.name, p.price, p.category]);
             conn.release();
 
-            if (result) {
+            if (result.rows.length > 0) {
                 return result.rows[0];
             } else {
-                return "Error: couldn't add product to database";
+                throw new Error("No data in the database");
             }
         } catch (error) {
             console.log(`Error while trying to create new product: ${error}`);
@@ -58,15 +66,19 @@ export default class ProductModel {
     async popular(): Promise<productType[] | string> {
         try {
             const conn = await client.connect();
-            const sql = 'select products.name, products.price, products.category, count(orders.product_id) as orders from products, orders where products.id = orders.product_id, group by orders.product_id order by orders.product_id limit 5';
+            const sql = 'select products.name, products.price, products.category, count(orders.product_id) as orders from products, orders where products.product_id = orders.product_id group by orders.product_id order by orders.product_id limit 5';
 
             const result = await conn.query(sql);
             conn.release();
 
-            return result.rows;
+            if (result.rows.length > 0) {
+                return result.rows;
+            } else {
+                throw new Error("No data in the database");
+            }
         } catch (error) {
-            console.log(`Erro while trying to get popular products: ${error}`);
-            return `Erro while trying to get popular products: ${error}`;
+            console.log(`Erro while trying to get popular products from database: ${error}`);
+            return `Erro while trying to get popular products from database: ${error}`;
         }
     }
 
@@ -78,7 +90,11 @@ export default class ProductModel {
             const result = await conn.query(sql, [category]);
             conn.release();
 
-            return result.rows; 
+           if (result.rows.length > 0) {
+                return result.rows;
+            } else {
+                throw new Error("No data in the database");
+            } 
         } catch (error) {
             console.log(`Error while trying to get products by category: ${error}`);
             return `Error while trying to get products by category: ${error}`;

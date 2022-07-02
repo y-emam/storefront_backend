@@ -4,8 +4,8 @@ import { authenticate } from '../../middleware/authenticate';
 
 const orderRoutes = Router();
 
-orderRoutes.get('/user', authenticate, userOrders);
+orderRoutes.get('/userOrders', authenticate, userOrders);
 
-orderRoutes.get('/completed', authenticate, completedOrders);
+orderRoutes.get('/completedOrders', authenticate, completedOrders);
 
 export default orderRoutes;

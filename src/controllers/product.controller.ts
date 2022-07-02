@@ -30,18 +30,26 @@ export const index = async (req: Request, res: Response, next: NextFunction) => 
 
 export const show = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const productName = req.body.name;
+        const productName = req.query.name;
 
-        const products = await ProductObject.show(productName);
+        if (typeof productName === 'string') {
+            const products = await ProductObject.show(productName.toLowerCase());
 
-        if (typeof products === 'string') {
-            throw new Error(products);
+            if (typeof products === 'string') {
+                throw new Error(products);
+            } else {
+                res.json({
+                    status: 'success',
+                    data: products
+                })
+            }
+
+
         } else {
-            res.json({
-                status: 'success',
-                data: products
-            })
+            res.status(400);
+            throw new Error('enter the product name in the url');
         }
+
     } catch (error) {
         console.log(`Error: while trying to get products: ${error}`);
         res.status(400).json({
@@ -63,6 +71,11 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
                 message: 'Invalid input data'
             });
             return;
+        }
+
+        data.name = data.name.toLowerCase();
+        if (data.category) {
+            data.category = data.category.toLowerCase();
         }
 
         // work with database

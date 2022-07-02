@@ -49,7 +49,7 @@ const show = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () 
             throw new Error('Invalid input: ' + first_name + ' ' + last_name);
         }
         else {
-            const user = yield UserObject.show(first_name, last_name);
+            const user = yield UserObject.show(first_name.toLowerCase(), last_name.toLowerCase());
             if (typeof user === 'string') {
                 throw new Error(user);
             }
@@ -79,6 +79,8 @@ const create = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
             // hash the password
             const salt = parseInt(config_1.default.salt_round, 10);
             data.password = bcrypt_1.default.hashSync(`${data.password}${config_1.default.pepper}`, salt);
+            data.first_name = data.first_name.toLowerCase();
+            data.last_name = data.last_name.toLowerCase();
             const user = yield UserObject.create(data);
             if (typeof user === 'string') {
                 res.json({

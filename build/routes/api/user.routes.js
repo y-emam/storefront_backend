@@ -4,7 +4,7 @@ const express_1 = require("express");
 const user_controller_1 = require("../../controllers/user.controller");
 const authenticate_1 = require("../../middleware/authenticate");
 const userRoutes = (0, express_1.Router)();
-userRoutes.post('/', authenticate_1.authenticate, user_controller_1.index);
+userRoutes.get('/', authenticate_1.authenticate, user_controller_1.index);
 userRoutes.post('/show', authenticate_1.authenticate, user_controller_1.show);
 userRoutes.post('/create', user_controller_1.create);
 exports.default = userRoutes;

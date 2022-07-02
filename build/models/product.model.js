@@ -70,8 +70,8 @@ class ProductModel {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const conn = yield database_1.default.connect();
-                const sql = '';
-                const result = yield conn.query(sql, []);
+                const sql = 'select products.name, products.price, products.category, count(orders.product_id) as orders from products, orders where products.id = orders.product_id, group by orders.product_id order by orders.product_id limit 5';
+                const result = yield conn.query(sql);
                 conn.release();
                 return result.rows;
             }

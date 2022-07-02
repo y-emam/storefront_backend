@@ -70,6 +70,9 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
             const salt = parseInt(config.salt_round as string, 10);
             data.password = bcrypt.hashSync(`${data.password}${config.pepper}`, salt);
             
+            data.first_name = data.first_name.toLowerCase();
+            data.last_name = data.last_name.toLowerCase();
+
             const user = await UserObject.create(data);
 
             if (typeof user === 'string') {

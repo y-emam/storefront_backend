@@ -10,7 +10,7 @@ productRoutes.get('/show', show);
 
 productRoutes.post('/create', authenticate, create);
 
-productRoutes.post('/top5', top5);
+productRoutes.get('/top5', top5);
 
 productRoutes.get('/category', category);
 
