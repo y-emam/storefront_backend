@@ -8,11 +8,47 @@ import ProductModel from '../models/product.model';
 const ProductObject = new ProductModel();
 
 export const index = async (req: Request, res: Response, next: NextFunction) => {
-    
+    try {
+        const products = await ProductObject.index();
+
+        if (typeof products === 'string') {
+            throw new Error(products);
+        } else {
+            res.json({
+                status: 'success',
+                data: products
+            })
+        }
+    } catch (error) {
+        console.log(`Error: while trying to get all products: ${error}`);
+        res.status(400).json({
+            status: 'error',
+            message: `Error: while trying to get all products: ${error}`
+        })
+    }
 }
 
 export const show = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const productName = req.body.name;
 
+        const products = await ProductObject.show(productName);
+
+        if (typeof products === 'string') {
+            throw new Error(products);
+        } else {
+            res.json({
+                status: 'success',
+                data: products
+            })
+        }
+    } catch (error) {
+        console.log(`Error: while trying to get products: ${error}`);
+        res.status(400).json({
+            status: 'error',
+            message: `Error: while trying to get products: ${error}`
+        })
+    }
 }
 
 export const create = async (req: Request, res: Response, next: NextFunction) => {
@@ -22,7 +58,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
         // validation of data
         if (data.name === '' || typeof data.name !== 'string'
             || data.price <= 0 || typeof data.price !== 'number') {
-            res.json({
+            res.status(400).json({
                 status: 'error',
                 message: 'Invalid input data'
             });
@@ -34,7 +70,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 
         // check success or failer of working with database
         if (typeof product === 'string') {
-            res.json({
+            res.status(400).json({
                 status: 'error',
                 message: `Error while trying to create product: ${product}`
             })
@@ -46,7 +82,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
         }
 
     } catch (error) {
-        res.json({
+        res.status(400).json({
             status: 'error',
             message: error,
         })
@@ -54,9 +90,45 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 }
 
 export const top5 = async(req: Request, res: Response, next: NextFunction) => {
+    try {
+        const products = await ProductObject.popular();
 
+        if (typeof products === 'string') {
+            throw new Error(products);
+        } else {
+            res.json({
+                status: 'success',
+                data: products
+            })
+        }
+    } catch (error) {
+        console.log(`Error: while trying to get top 5 products: ${error}`);
+        res.status(400).json({
+            status: 'error',
+            message: `Error: while trying to get top 5 products: ${error}`
+        })
+    }
 }
 
 export const category = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const category = req.query.category as string;
 
+        const products = await ProductObject.category(category);
+
+        if (typeof products === 'string') {
+            throw new Error(products);
+        } else {
+            res.json({
+                status: 'success',
+                data: products
+            })
+        }
+    } catch (error) {
+        console.log(`Error: while trying to get products by category: ${error}`);
+        res.status(400).json({
+            status: 'error',
+            message: `Error: while trying to get products by category: ${error}`
+        })
+    }
 }

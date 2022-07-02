@@ -20,7 +20,7 @@ export default class UserModel{
             const conn = await client.connect();
             const sql = 'SELECT first_name, last_name from users WHERE first_name = $1 AND last_name = $2;';
 
-            const result = await conn.query(sql, [first_name]);
+            const result = await conn.query(sql, [first_name, last_name]);
             return result.rows;
         } catch (error) {
             console.log(`Erro while trying to get users from database: ${error}`);
@@ -35,9 +35,6 @@ export default class UserModel{
             const conn = await client.connect();
             const insertSql = 'INSERT INTO users(first_name, last_name, password) VALUES ($1, $2, $3);';
             const outputSql = 'SELECT * FROM users where first_name = ($1) and last_name = ($2) and password = ($3);';
-
-            // hash the passowrd
-            
 
             // use jwt token
             const insert = await conn.query(insertSql, [u.first_name, u.last_name, u.password]);

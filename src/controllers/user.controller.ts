@@ -5,14 +5,57 @@ import userType from '../types/user.type';
 import bcrypt from 'bcrypt';
 import UserModel from '../models/user.model';
 
-const userObject = new UserModel();
+const UserObject = new UserModel();
 
-export const index = (req: Request, res: Response, next: NextFunction) => {
-    
+export const index = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const users = await UserObject.Index();
+        
+        if (users === 'string') {
+            throw new Error(users);
+        } else {
+            res.json({
+                status: 'success',
+                data: users
+            })
+        }
+    } catch (error) {
+        console.log(`Error: failed to show all users: ${error}`);
+        res.json({
+            status: 'error',
+            message: `Error: failed to show all users: ${error}`
+        })
+    }
 }
 
-export const show = (req: Request, res: Response, next: NextFunction) => {
+export const show = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const first_name = req.body.first_name;
+        const last_name = req.body.last_name;
 
+        if (typeof first_name !== 'string' || first_name === ''
+            || typeof last_name !== 'string' || last_name === '') {
+            throw new Error('Invalid input: ' + first_name + ' ' + last_name);
+        } else {
+            const user = await UserObject.show(first_name.toLowerCase(), last_name.toLowerCase());
+
+            if (typeof user === 'string') {
+                throw new Error(user);
+            } else {
+                res.json({
+                    status: 'success',
+                    data: user
+                })
+            }
+        }
+        
+    } catch (error) {
+        console.log(`Error: failed to show the user: ${error}`);
+        res.json({
+            status: 'error',
+            message: `Error: failed to show the user: ${error}`
+        })
+    }
 }
 
 export const create = async (req: Request, res: Response, next: NextFunction) => {
@@ -27,7 +70,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
             const salt = parseInt(config.salt_round as string, 10);
             data.password = bcrypt.hashSync(`${data.password}${config.pepper}`, salt);
             
-            const user = await userObject.create(data);
+            const user = await UserObject.create(data);
 
             if (typeof user === 'string') {
                 res.json({

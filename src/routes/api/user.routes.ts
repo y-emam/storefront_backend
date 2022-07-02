@@ -5,7 +5,7 @@ import { authenticate } from '../../middleware/authenticate';
 
 const userRoutes = Router();
 
-userRoutes.post('/', authenticate, index);
+userRoutes.get('/', authenticate, index);
 
 
 userRoutes.post('/show', authenticate, show);

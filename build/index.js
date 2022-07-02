@@ -14,6 +14,9 @@ const port = config_1.default.port;
 app.use((0, helmet_1.default)());
 app.use(express_1.default.json());
 app.use('/api', index_1.default);
+app.use((req, res) => {
+    res.status(404).send("Error: routes doesn't exist (-_-)");
+});
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
 });

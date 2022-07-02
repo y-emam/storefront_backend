@@ -58,9 +58,9 @@ export default class ProductModel {
     async popular(): Promise<productType[] | string> {
         try {
             const conn = await client.connect();
-            const sql = '';
+            const sql = 'select products.name, products.price, products.category, count(orders.product_id) as orders from products, orders where products.id = orders.product_id, group by orders.product_id order by orders.product_id limit 5';
 
-            const result = await conn.query(sql, []);
+            const result = await conn.query(sql);
             conn.release();
 
             return result.rows;

@@ -46,6 +46,7 @@
     "@types/jsonwebtoken": "^8.5.8",
     "@types/morgan": "^1.9.3",
     "@types/pg": "^8.6.5",
+    "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.30.0",
     "@typescript-eslint/parser": "^5.30.0",
     "eslint-config-google": "^0.14.0",
@@ -53,6 +54,7 @@
     "jasmine-spec-reporter": "^7.0.0",
     "jasmine-ts": "^0.4.0",
     "nodemon": "^2.0.18",
+    "supertest": "^6.2.4",
     "ts-node": "^10.8.1",
     "tsc-watch": "^5.0.3",
     "typescript": "^4.7.4"

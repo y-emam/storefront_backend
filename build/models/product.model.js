@@ -46,8 +46,26 @@ class ProductModel {
             }
         });
     }
-    // async create(p: productType): Promise<productType | string> {
-    // }
+    create(p) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const conn = yield database_1.default.connect();
+                const sql = 'Insert into products(name, price, category) values ($1, $2, $3)';
+                const result = yield conn.query(sql, [p.name, p.price, p.category]);
+                conn.release();
+                if (result) {
+                    return result.rows[0];
+                }
+                else {
+                    return "Error: couldn't add product to database";
+                }
+            }
+            catch (error) {
+                console.log(`Error while trying to create new product: ${error}`);
+                return `Error while trying to create new product: ${error}`;
+            }
+        });
+    }
     popular() {
         return __awaiter(this, void 0, void 0, function* () {
             try {

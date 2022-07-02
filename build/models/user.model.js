@@ -13,8 +13,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const database_1 = __importDefault(require("../database"));
-const config_1 = __importDefault(require("../config"));
-const bcrypt_1 = __importDefault(require("bcrypt"));
 class UserModel {
     Index() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -35,7 +33,7 @@ class UserModel {
             try {
                 const conn = yield database_1.default.connect();
                 const sql = 'SELECT first_name, last_name from users WHERE first_name = $1 AND last_name = $2;';
-                const result = yield conn.query(sql, [first_name]);
+                const result = yield conn.query(sql, [first_name, last_name]);
                 return result.rows;
             }
             catch (error) {
@@ -46,16 +44,13 @@ class UserModel {
     }
     create(u) {
         return __awaiter(this, void 0, void 0, function* () {
-            const salt = parseInt(config_1.default.salt_round, 10);
             try {
                 const conn = yield database_1.default.connect();
                 const insertSql = 'INSERT INTO users(first_name, last_name, password) VALUES ($1, $2, $3);';
                 const outputSql = 'SELECT * FROM users where first_name = ($1) and last_name = ($2) and password = ($3);';
-                // hash the passowrd
-                const hashPass = bcrypt_1.default.hashSync(`${u.password}${config_1.default.pepper}`, salt);
                 // use jwt token
-                const insert = yield conn.query(insertSql, [u.first_name, u.last_name, hashPass]);
-                const result = yield conn.query(outputSql, [u.first_name, u.last_name, hashPass]);
+                const insert = yield conn.query(insertSql, [u.first_name, u.last_name, u.password]);
+                const result = yield conn.query(outputSql, [u.first_name, u.last_name, u.password]);
                 return result.rows[0];
             }
             catch (error) {
