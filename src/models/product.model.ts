@@ -52,11 +52,7 @@ export default class ProductModel {
             const result = await conn.query(sql ,[p.name, p.price, p.category]);
             conn.release();
 
-            if (result.rows.length > 0) {
-                return result.rows[0];
-            } else {
-                throw new Error("No data in the database");
-            }
+            return result.rows[0];
         } catch (error) {
             console.log(`Error while trying to create new product: ${error}`);
             return `Error while trying to create new product: ${error}`;

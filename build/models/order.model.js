@@ -21,7 +21,12 @@ class OrderModel {
                 const sql = 'select * from orders where user_id = ($1);';
                 const result = yield conn.query(sql, [id]);
                 conn.release();
-                return result.rows;
+                if (result.rows.length > 0) {
+                    return result.rows;
+                }
+                else {
+                    throw new Error("No data in the database");
+                }
             }
             catch (error) {
                 console.log(`Erro while trying to get orders: ${error}`);
@@ -36,7 +41,12 @@ class OrderModel {
                 const sql = "select * from orders where user_id = ($1) and status = 'complete';";
                 const result = yield conn.query(sql, [id]);
                 conn.release();
-                return result.rows;
+                if (result.rows.length > 0) {
+                    return result.rows;
+                }
+                else {
+                    throw new Error("No data in the database");
+                }
             }
             catch (error) {
                 console.log(`Erro while trying to get completed orders: ${error}`);
