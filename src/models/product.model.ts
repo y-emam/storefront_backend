@@ -63,7 +63,8 @@ export default class ProductModel {
         try {
             const conn = await client.connect();
             // const sql = 'select products.name, products.price, products.category, count(orders.product_id) as orders from products, orders where products.product_id = orders.product_id group by orders.product_id order by orders.product_id limit 5';
-            const sql = "select products.name as name, products.price as price, products.category as category, count(orders.product_id) as orders from products, orders WHERE orders.product_id = products.product_id group by orders.product_id, name, category, price order by orders desc limit 5;";
+            // const sql = "select products.name as name, products.price as price, products.category as category, count(orders.product_id) as orders from products, orders WHERE orders.product_id = products.product_id group by orders.product_id, name, category, price order by orders desc limit 5;";
+            const sql = 'select products.name as name, products.price as price, products.category as category, count(productsOrders.product_id) as orders from products inner join productsOrders on products.product_id = productsOrders.product_id group by productsOrders.product_id, name, category, price order by orders desc limit 5;';
 
             const result = await conn.query(sql);
             conn.release();

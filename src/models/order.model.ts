@@ -6,7 +6,7 @@ export default class OrderModel{
         try {
             const conn = await client.connect();
             const sql = 'select * from orders where user_id = ($1);';
-
+            
             const result = await conn.query(sql, [id]);
             conn.release();
 
