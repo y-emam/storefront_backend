@@ -25,22 +25,26 @@
 
 #### Product
 
-- id: Integer/Primary/auto-increment
+- product_id: Integer/Primary/auto-increment
 - name: varchar
 - price: integer
 - [OPTIONAL] category: carchar
 
 #### User
 
-- id: Integer/Primary/auto-increment 
+- user_id: Integer/Primary/auto-increment 
 - firstName: varchar
 - lastName: varchar
 - password: text
 
 #### Orders
 
-- id: Integer/Primary/auto-increment
-- id of each product in the order: integer/ foregin key
-- quantity of each product in the order: integer
+- order_id: Integer/Primary/auto-increment
 - user_id: integer/ foregin key
-- status of order (active or complete): varchar
+- status (active or complete): varchar
+  
+####productsOrders
+  
+- order_id: Integer/Primary_key/ foreign key
+- producgt_id: integer/ primar key/ foreign key
+- quantity: integer
