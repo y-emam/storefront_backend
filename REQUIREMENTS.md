@@ -25,22 +25,22 @@
 
 #### Product
 
-- id
-- name
-- price
-- [OPTIONAL] category
+- id: Integer/Primary/auto-increment
+- name: varchar
+- price: integer
+- [OPTIONAL] category: carchar
 
 #### User
 
-- id
-- firstName
-- lastName
-- password
+- id: Integer/Primary/auto-increment 
+- firstName: varchar
+- lastName: varchar
+- password: varchar
 
 #### Orders
 
-- id
-- id of each product in the order
-- quantity of each product in the order
-- user_id
-- status of order (active or complete)
+- id: Integer/Primary/auto-increment
+- id of each product in the order: integer/ foregin key
+- quantity of each product in the order: integer
+- user_id: integer/ foregin key
+- status of order (active or complete): varchar
