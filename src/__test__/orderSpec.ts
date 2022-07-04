@@ -9,6 +9,7 @@ describe('writing tests for order functionalities', () => {
         const id = "5";
 
         const response = await tester.get("/api/order/userOrders?id=" + id).set('authorization', config.jwt as string);
+        // no orders in the database
         expect(response.statusCode).toEqual(400);
     });
 
@@ -16,6 +17,7 @@ describe('writing tests for order functionalities', () => {
         const id = "7";
 
         const response = await tester.get("/api/order/completedOrders?id=" + id).set('authorization', config.jwt as string);
+        // no orders in the database
         expect(response.statusCode).toEqual(400);
     });
 })
