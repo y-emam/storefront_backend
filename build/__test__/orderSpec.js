@@ -20,11 +20,13 @@ describe('writing tests for order functionalities', () => {
     it('checking the userOrders of the endpoint', () => __awaiter(void 0, void 0, void 0, function* () {
         const id = "5";
         const response = yield tester.get("/api/order/userOrders?id=" + id).set('authorization', config_1.default.jwt);
+        // no orders in the database
         expect(response.statusCode).toEqual(400);
     }));
     it('checking the completed orders of the endpoint', () => __awaiter(void 0, void 0, void 0, function* () {
         const id = "7";
         const response = yield tester.get("/api/order/completedOrders?id=" + id).set('authorization', config_1.default.jwt);
+        // no orders in the database
         expect(response.statusCode).toEqual(400);
     }));
 });
