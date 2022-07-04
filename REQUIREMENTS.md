@@ -35,7 +35,7 @@
 - id: Integer/Primary/auto-increment 
 - firstName: varchar
 - lastName: varchar
-- password: varchar
+- password: text
 
 #### Orders
 
