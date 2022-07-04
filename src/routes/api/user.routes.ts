@@ -8,7 +8,7 @@ const userRoutes = Router();
 userRoutes.get('/', authenticate, index);
 
 
-userRoutes.post('/show', authenticate, show);
+userRoutes.get('/show', authenticate, show);
 
 
 userRoutes.post('/create', create);

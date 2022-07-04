@@ -9,7 +9,7 @@
     "tsc": "tsc",
     "up": "db-migrate up",
     "down": "db-migrate down",
-    "test": "npm run build && jasmine",
+    "test": "npm run up && npm run build && jasmine && npm run down",
     "js": "npm run build && node build/index.js",
     "prettier": "npx prettier --write ./src/**/*.ts",
     "lint": "npx eslint ./src/**/*.ts",

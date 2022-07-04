@@ -30,8 +30,8 @@ export const index = async (req: Request, res: Response, next: NextFunction) => 
 
 export const show = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const first_name = req.body.first_name;
-        const last_name = req.body.last_name;
+        const first_name = req.query.first_name;
+        const last_name = req.query.last_name;
 
         if (typeof first_name !== 'string' || first_name === ''
             || typeof last_name !== 'string' || last_name === '') {

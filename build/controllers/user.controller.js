@@ -42,8 +42,8 @@ const index = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
 exports.index = index;
 const show = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const first_name = req.body.first_name;
-        const last_name = req.body.last_name;
+        const first_name = req.query.first_name;
+        const last_name = req.query.last_name;
         if (typeof first_name !== 'string' || first_name === ''
             || typeof last_name !== 'string' || last_name === '') {
             throw new Error('Invalid input: ' + first_name + ' ' + last_name);

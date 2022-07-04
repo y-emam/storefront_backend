@@ -3,7 +3,7 @@ import productType from '../types/product.type';
 
 export default class ProductModel {
     // gets all products
-    async index(): Promise<ProductModel[] | string>{
+    async index(): Promise<productType[] | string>{
         try {
             const conn = await client.connect();
             const sql = 'SELECT name, price, category FROM products;';
