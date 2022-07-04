@@ -6,14 +6,14 @@
 
 - Index: GET (/api/products)
 - Show: GET (/api/products/show?name=<product_name>)
-- Create [token required]: POST (/api/products/create) with body of new product
+- Create [token required]: POST (/api/products/create) with body of new product 
 - [OPTIONAL] Top 5 most popular products : GET (/api/products/top5)
 - [OPTIONAL] Products by category (args: product category): GET (/api/products/category?category=<product_category>)
 
 #### Users
 
 - Index [token required]: GET (/api/user)
-- Show [token required]: POST (/api/user/show) with body of first_name and last_name
+- Show [token required]: Get (/api/user/show?firs_name=<enter the first name>&last_name=<enter the last name>)
 - Create N[token required]: POST (/api/user/create) with body of new user
 
 #### Orders
@@ -25,22 +25,22 @@
 
 #### Product
 
-- id
-- name
-- price
-- [OPTIONAL] category
+- id: Integer/Primary/auto-increment
+- name: varchar
+- price: integer
+- [OPTIONAL] category: carchar
 
 #### User
 
-- id
-- firstName
-- lastName
-- password
+- id: Integer/Primary/auto-increment 
+- firstName: varchar
+- lastName: varchar
+- password: text
 
 #### Orders
 
-- id
-- id of each product in the order
-- quantity of each product in the order
-- user_id
-- status of order (active or complete)
+- id: Integer/Primary/auto-increment
+- id of each product in the order: integer/ foregin key
+- quantity of each product in the order: integer
+- user_id: integer/ foregin key
+- status of order (active or complete): varchar
