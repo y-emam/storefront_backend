@@ -1,6 +1,10 @@
 # Storefront Backend
 
-### Setup:
+## Setup:
+
+
+#### Installing packages:
+- run in the console the command < npx m-zanaty-web-utils@latest > and it will install most of the packages you need
 
 #### Ports
 
