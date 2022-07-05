@@ -10,11 +10,7 @@ export default class OrderModel{
             const result = await conn.query(sql, [id]);
             conn.release();
 
-            if (result.rows.length > 0) {
-                return result.rows;
-            } else {
-                throw new Error("No data in the database");
-            }
+            return result.rows;
         } catch (error) {
             console.log(`Erro while trying to get orders: ${error}`);
             return `Erro while trying to get orders: ${error}`;
@@ -29,11 +25,7 @@ export default class OrderModel{
             const result = await conn.query(sql, [id]);
             conn.release();
 
-            if (result.rows.length > 0) {
-                return result.rows;
-            } else {
-                throw new Error("No data in the database");
-            }
+            return result.rows;
         } catch (error) {
             console.log(`Erro while trying to get completed orders: ${error}`);
             return `Erro while trying to get completed orders: ${error}`;

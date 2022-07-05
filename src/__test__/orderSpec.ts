@@ -10,7 +10,7 @@ describe('writing tests for order functionalities', () => {
 
         const response = await tester.get("/api/order/userOrders?id=" + id).set('authorization', config.jwt as string);
         // no orders in the database
-        expect(response.statusCode).toEqual(400);
+        expect(response.statusCode).toEqual(200);
     });
 
     it('checking the completed orders of the endpoint', async () => {
@@ -18,6 +18,6 @@ describe('writing tests for order functionalities', () => {
 
         const response = await tester.get("/api/order/completedOrders?id=" + id).set('authorization', config.jwt as string);
         // no orders in the database
-        expect(response.statusCode).toEqual(400);
+        expect(response.statusCode).toEqual(200);
     });
 })
