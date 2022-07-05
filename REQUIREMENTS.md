@@ -20,6 +20,7 @@
 
 - Current Order by user (args: user id)[token required]: GET (/api/order/userOrders?id=<user_id>)
 - [OPTIONAL] Completed Orders by user (args: user id)[token required]: GET (/api/order/completedOrders?id=<user_id>)
+- create an order: POST (/api/order/createOrder/) with order object in the body of request
 
 ## Data Shapes
 
