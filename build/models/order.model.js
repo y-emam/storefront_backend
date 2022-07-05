@@ -44,5 +44,20 @@ class OrderModel {
             }
         });
     }
+    createOrder(o) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const conn = yield database_1.default.connect();
+                const sql = "insert into orders(user_id, status) values($1, $2);";
+                let result = yield conn.query(sql, [o.user_id, o.status]);
+                conn.release();
+                return o;
+            }
+            catch (error) {
+                console.log(`Erro while trying to get completed orders: ${error}`);
+                return `Erro while trying to get completed orders: ${error}`;
+            }
+        });
+    }
 }
 exports.default = OrderModel;

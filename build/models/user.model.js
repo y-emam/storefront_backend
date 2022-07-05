@@ -18,7 +18,7 @@ class UserModel {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const conn = yield database_1.default.connect();
-                const sql = 'select first_name, last_name from users;';
+                const sql = 'select user_id, first_name, last_name from users;';
                 const result = yield conn.query(sql);
                 if (result.rows.length > 0) {
                     return result.rows;

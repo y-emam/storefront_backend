@@ -5,7 +5,7 @@ export default class UserModel{
     async Index(): Promise<userType[] | string> {
         try {
             const conn = await client.connect();
-            const sql = 'select first_name, last_name from users;';
+            const sql = 'select user_id, first_name, last_name from users;';
 
             const result = await conn.query(sql);
             

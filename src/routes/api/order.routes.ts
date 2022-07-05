@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { userOrders, completedOrders } from '../../controllers/order.controller';
+import { userOrders, completedOrders, createOrder } from '../../controllers/order.controller';
 import { authenticate } from '../../middleware/authenticate';
 
 const orderRoutes = Router();
@@ -7,5 +7,7 @@ const orderRoutes = Router();
 orderRoutes.get('/userOrders', authenticate, userOrders);
 
 orderRoutes.get('/completedOrders', authenticate, completedOrders);
+
+orderRoutes.post('/createOrder', authenticate, createOrder);
 
 export default orderRoutes;

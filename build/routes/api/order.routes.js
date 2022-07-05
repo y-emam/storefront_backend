@@ -6,4 +6,5 @@ const authenticate_1 = require("../../middleware/authenticate");
 const orderRoutes = (0, express_1.Router)();
 orderRoutes.get('/userOrders', authenticate_1.authenticate, order_controller_1.userOrders);
 orderRoutes.get('/completedOrders', authenticate_1.authenticate, order_controller_1.completedOrders);
+orderRoutes.post('/createOrder', authenticate_1.authenticate, order_controller_1.createOrder);
 exports.default = orderRoutes;

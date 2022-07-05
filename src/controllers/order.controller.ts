@@ -51,3 +51,26 @@ export const completedOrders = async (req: Request, res: Response, next: NextFun
         })
     }
 }
+
+export const createOrder = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const data = req.body as orderType;
+
+        const orders = await OrderObject.createOrder(data);
+
+        if (typeof orders === 'string') {
+            throw new Error(orders);
+        } else {
+            res.json({
+                status: 'success',
+                data: orders
+            })
+        }
+    } catch (error) {
+        console.log(`Error while trying to get competed orders from the database: ${error}`);
+        res.status(400).json({ 
+            status: 'error',
+            message: `Error while trying to get competed orders from the database: ${error}`
+        })
+    }
+}
