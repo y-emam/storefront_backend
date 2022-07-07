@@ -27,9 +27,6 @@ describe('writing tests for order functionalities', () => {
         const users = yield UserObject.Index();
         if (typeof users === 'object')
             user = users[0];
-        console.log('====================================');
-        console.log(user.user_id);
-        console.log('====================================');
         data = {
             user_id: user.user_id,
             status: 'active'
